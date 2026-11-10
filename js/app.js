@@ -182,75 +182,100 @@
   /* ---------- Catálogo (productos.html) ---------- */
   var cat = $('#catalogo');
   if (cat) {
-    var filtros = $('#filtros');
-    filtros.innerHTML = MYA.lineas.map(function (l) { return '<a href="#' + l.id + '">' + esc(l.nombre) + '</a>'; }).join('');
+    var lista = $('#cat-lista'), grid = $('#prods'), cuenta = $('#cuenta'), titulo = $('#cat-titulo'),
+      refs = $('#refs'), orden = $('#orden'), campo = $('.buscador input'), catBtn = $('.cat-btn');
+    var est = { linea: null, grupo: null, q: new URLSearchParams(location.search).get('q') || '', vista: 'grid' };
 
-    cat.innerHTML = '<div class="aviso-busqueda" id="aviso" hidden></div>' + MYA.lineas.map(function (l) {
-      return '<section class="bloque" id="' + l.id + '"><h2>' + esc(l.nombre) + '</h2><p class="resumen">' + esc(l.resumen) + '</p>' +
-        l.grupos.map(function (g) {
-          var base = norm(l.nombre + ' ' + g.nombre + ' ' + g.marcas.join(' ') + ' ' + g.items.join(' '));
-          return '<article class="grupo" data-b="' + esc(base) + '"><div class="grupo-cab"><h3>' + esc(g.nombre) + '</h3>' +
-            (g.marcas.length ? '<span class="marcas"><b>Marcas:</b> ' + esc(g.marcas.join(', ')) + '</span>' : '') + '</div>' +
-            '<div class="prods">' + g.fotos.map(function (f) {
-              return '<div class="prod" data-b="' + esc(norm(f[1])) + '"><div class="img"><img src="' + foto(f[0]) + '" alt="' + esc(f[1]) +
-                '" loading="lazy"></div><h4>' + esc(f[1]) + '</h4><p class="disp">Precio por cotización</p>' +
-                linkWa('Hola, quiero cotizar: ' + f[1] + ' (' + g.nombre + ').', 'btn btn-cian', ICONO_WA + 'Cotizar') + '</div>';
-            }).join('') + '</div>' +
-            '<div class="refs"><h4>Referencias que manejamos</h4><ul>' +
-            g.items.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul></div></article>';
-        }).join('') + '</section>';
-    }).join('') + '<p class="sin-resultados" id="sin-resultados" hidden>No encontramos productos con esa búsqueda. ' +
-      linkWa('Hola, estoy buscando un producto que no encontré en la página: ', '', 'Escríbanos por WhatsApp') + ' y se lo conseguimos.</p>';
+    lista.innerHTML = '<li><a href="#todos" data-l="">Todos los productos</a></li>' + MYA.lineas.map(function (l) {
+      var sub = l.grupos.length > 1 ? '<ul>' + l.grupos.map(function (g, k) {
+        return '<li><a href="#' + l.id + '/' + k + '" data-l="' + l.id + '" data-g="' + k + '">' + esc(g.nombre) + '</a></li>';
+      }).join('') + '</ul>' : '';
+      return '<li><a href="#' + l.id + '" data-l="' + l.id + '">' + esc(l.nombre) + '</a>' + sub + '</li>';
+    }).join('');
 
-    var q = new URLSearchParams(location.search).get('q') || '';
-    var campo = $('.buscador input');
-    var aplicar = function (texto) {
-      var t = norm(texto.trim());
-      var total = 0;
-      $$('.bloque', cat).forEach(function (b) {
-        var visibles = 0;
-        $$('.grupo', b).forEach(function (g) {
-          var grupoOk = !t || g.getAttribute('data-b').indexOf(t) !== -1;
-          var alguno = 0;
-          $$('.prod', g).forEach(function (p) {
-            var ok = grupoOk || p.getAttribute('data-b').indexOf(t) !== -1;
-            p.hidden = !ok;
-            if (ok) alguno++;
-          });
-          g.hidden = !alguno;
-          if (alguno) visibles++;
-        });
-        b.hidden = !visibles;
-        total += visibles;
-      });
-      $('#sin-resultados').hidden = total > 0;
-      var aviso = $('#aviso');
-      aviso.hidden = !t;
-      if (t) aviso.innerHTML = '<span>Resultados para <b>“' + esc(texto.trim()) + '”</b></span><a href="productos.html">Ver todo el catálogo</a>';
+    var leerHash = function () {
+      var h = decodeURIComponent(location.hash.slice(1)).split('/');
+      var l = linea(h[0]);
+      est.linea = l ? l.id : null;
+      est.grupo = l && h[1] !== undefined && l.grupos[Number(h[1])] ? Number(h[1]) : null;
     };
-    if (campo) {
-      campo.value = q;
-      campo.addEventListener('input', function () { aplicar(campo.value); });
-      campo.form.addEventListener('submit', function (e) { e.preventDefault(); aplicar(campo.value); cat.scrollIntoView(); });
-    }
-    if (q) aplicar(q);
 
-    if ('IntersectionObserver' in window) {
-      var enlaces = {};
-      $$('a', filtros).forEach(function (a) { enlaces[a.getAttribute('href').slice(1)] = a; });
-      var obs = new IntersectionObserver(function (ents) {
-        ents.forEach(function (en) {
-          if (!en.isIntersecting) return;
-          Object.keys(enlaces).forEach(function (k) { enlaces[k].classList.toggle('activo', k === en.target.id); });
-          var a = enlaces[en.target.id];
-          filtros.scrollTo({ left: a.offsetLeft - 16 });
+    var pintar = function () {
+      var t = norm(est.q.trim());
+      var items = [], bloques = [];
+      MYA.lineas.forEach(function (l) {
+        if (!t && est.linea && l.id !== est.linea) return;
+        l.grupos.forEach(function (g, k) {
+          if (!t && est.grupo !== null && k !== est.grupo) return;
+          var base = norm(l.nombre + ' ' + g.nombre + ' ' + g.marcas.join(' ') + ' ' + g.items.join(' '));
+          var grupoOk = !t || base.indexOf(t) !== -1;
+          var n = 0;
+          g.fotos.forEach(function (f) {
+            if (grupoOk || norm(f[1]).indexOf(t) !== -1) { items.push({ id: f[0], nombre: f[1], grupo: g.nombre }); n++; }
+          });
+          if (n) bloques.push(g);
         });
-      }, { rootMargin: '-80px 0px -75% 0px' });
-      $$('.bloque', cat).forEach(function (b) { obs.observe(b); });
-    }
-    if (location.hash) {
-      var destino = document.getElementById(location.hash.slice(1));
-      if (destino) destino.scrollIntoView();
-    }
+      });
+      if (orden.value === 'az' || orden.value === 'za') {
+        items.sort(function (a, b) { return a.nombre.localeCompare(b.nombre, 'es'); });
+        if (orden.value === 'za') items.reverse();
+      }
+
+      var l = est.linea && linea(est.linea);
+      titulo.textContent = t ? 'Resultados para “' + est.q.trim() + '”'
+        : !l ? 'Todos los productos'
+        : est.grupo !== null ? l.grupos[est.grupo].nombre : l.nombre;
+      cuenta.textContent = items.length ? 'Mostrando 1-' + items.length + ' de ' + items.length + ' resultados' : 'Sin resultados';
+
+      grid.className = 'prods' + (est.vista === 'lista' ? ' en-lista' : '');
+      grid.innerHTML = items.map(function (it) {
+        return '<article class="prod"><div class="img"><img src="' + foto(it.id) + '" alt="' + esc(it.nombre) + '" loading="lazy"></div>' +
+          '<div class="datos"><h3>' + esc(it.nombre) + '</h3><p class="disp">' + esc(it.grupo) + ' · precio por cotización</p>' +
+          linkWa('Hola, quiero cotizar: ' + it.nombre + ' (' + it.grupo + ').', 'btn btn-wa', ICONO_WA + 'WhatsApp') + '</div></article>';
+      }).join('');
+      $('#sin-resultados').hidden = items.length > 0;
+
+      var conRefs = (est.linea || t) ? bloques : [];
+      refs.innerHTML = conRefs.map(function (g) {
+        return '<div class="refs"><h3>' + esc(g.nombre) + ': referencias que manejamos</h3>' +
+          (g.marcas.length ? '<p class="marcas"><b>Marcas:</b> ' + esc(g.marcas.join(', ')) + '</p>' : '') +
+          '<ul>' + g.items.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+      }).join('');
+
+      $$('a', lista).forEach(function (a) {
+        var al = a.getAttribute('data-l'), ag = a.getAttribute('data-g');
+        var activo = !t && (al || null) === est.linea && (ag === null ? est.grupo === null : Number(ag) === est.grupo);
+        a.classList.toggle('activo', activo);
+        if (ag === null) a.parentNode.classList.toggle('abierto', !t && !!al && al === est.linea);
+      });
+      $$('.vista button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === est.vista)); });
+    };
+
+    lista.addEventListener('click', function (e) {
+      if (e.target.tagName !== 'A') return;
+      est.q = ''; campo.value = '';
+      if (history.replaceState && location.search) history.replaceState(null, '', 'productos.html' + e.target.getAttribute('href'));
+      if (window.matchMedia('(max-width: 900px)').matches) { lista.hidden = true; catBtn.setAttribute('aria-expanded', 'false'); }
+      if (e.target.getAttribute('href') === location.hash) { leerHash(); pintar(); }
+    });
+    window.addEventListener('hashchange', function () {
+      leerHash(); pintar();
+      $('.resultados').scrollIntoView();
+    });
+    catBtn.addEventListener('click', function () {
+      lista.hidden = !lista.hidden;
+      catBtn.setAttribute('aria-expanded', String(!lista.hidden));
+    });
+    if (window.matchMedia('(max-width: 900px)').matches) { lista.hidden = true; catBtn.setAttribute('aria-expanded', 'false'); }
+    orden.addEventListener('change', pintar);
+    $$('.vista button').forEach(function (b) {
+      b.addEventListener('click', function () { est.vista = b.getAttribute('data-v'); pintar(); });
+    });
+    campo.value = est.q;
+    campo.addEventListener('input', function () { est.q = campo.value; pintar(); });
+    campo.form.addEventListener('submit', function (e) { e.preventDefault(); est.q = campo.value; pintar(); $('.resultados').scrollIntoView(); });
+
+    leerHash();
+    pintar();
   }
 })();
