@@ -200,26 +200,39 @@
       est.grupo = l && h[1] !== undefined && l.grupos[Number(h[1])] ? Number(h[1]) : null;
     };
 
+    var productos = MYA.datos.enCache();
+    var info = {};
+    MYA.lineas.forEach(function (l, i) {
+      l.grupos.forEach(function (g, k) {
+        info[l.id + '|' + g.nombre] = { g: g, k: k, pos: i * 100 + k,
+          base: norm(l.nombre + ' ' + g.nombre + ' ' + g.marcas.join(' ') + ' ' + g.items.join(' ')) };
+      });
+    });
+    var SIN_FOTO = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" fill="#eef0f5"/><path d="M30 84l20-24 14 16 10-12 16 20z" fill="#c9cedb"/><circle cx="82" cy="42" r="8" fill="#c9cedb"/></svg>');
+
     var pintar = function () {
       var t = norm(est.q.trim());
       var items = [], bloques = [];
-      MYA.lineas.forEach(function (l) {
-        if (!t && est.linea && l.id !== est.linea) return;
-        l.grupos.forEach(function (g, k) {
-          if (!t && est.grupo !== null && k !== est.grupo) return;
-          var base = norm(l.nombre + ' ' + g.nombre + ' ' + g.marcas.join(' ') + ' ' + g.items.join(' '));
-          var grupoOk = !t || base.indexOf(t) !== -1;
-          var n = 0;
-          g.fotos.forEach(function (f) {
-            if (grupoOk || norm(f[1]).indexOf(t) !== -1) { items.push({ id: f[0], nombre: f[1], grupo: g.nombre }); n++; }
-          });
-          if (n) bloques.push(g);
-        });
+      productos.forEach(function (p, n) {
+        var inf = info[p.linea + '|' + p.grupo];
+        if (!inf || p.oculto) return;
+        if (!t && est.linea && p.linea !== est.linea) return;
+        if (!t && est.grupo !== null && inf.k !== est.grupo) return;
+        if (t && inf.base.indexOf(t) === -1 && norm(p.nombre).indexOf(t) === -1) return;
+        items.push({ p: p, inf: inf, n: n });
+        if (bloques.indexOf(inf.g) === -1) bloques.push(inf.g);
       });
-      if (orden.value === 'az' || orden.value === 'za') {
-        items.sort(function (a, b) { return a.nombre.localeCompare(b.nombre, 'es'); });
-        if (orden.value === 'za') items.reverse();
-      }
+      var o = orden.value;
+      items.sort(function (a, b) {
+        if (o === 'az') return a.p.nombre.localeCompare(b.p.nombre, 'es');
+        if (o === 'za') return b.p.nombre.localeCompare(a.p.nombre, 'es');
+        if (o === 'pmin' || o === 'pmax') {
+          if (a.p.precio === null || b.p.precio === null) return (a.p.precio === null) - (b.p.precio === null) || a.n - b.n;
+          return o === 'pmin' ? a.p.precio - b.p.precio : b.p.precio - a.p.precio;
+        }
+        return a.inf.pos - b.inf.pos || a.n - b.n;
+      });
+      bloques.sort(function (a, b) { return info_pos(a) - info_pos(b); });
 
       var l = est.linea && linea(est.linea);
       titulo.textContent = t ? 'Resultados para “' + est.q.trim() + '”'
@@ -229,10 +242,19 @@
 
       grid.className = 'prods' + (est.vista === 'lista' ? ' en-lista' : '');
       grid.innerHTML = items.map(function (it) {
-        return '<article class="prod"><div class="img"><img src="' + foto(it.id) + '" alt="' + esc(it.nombre) + '" loading="lazy"></div>' +
-          '<div class="datos"><h3>' + esc(it.nombre) + '</h3><p class="disp">' + esc(it.grupo) + ' · precio por cotización</p>' +
-          linkWa('Hola, quiero cotizar: ' + it.nombre + ' (' + it.grupo + ').', 'btn btn-wa', ICONO_WA + 'WhatsApp') + '</div></article>';
+        var p = it.p, src = MYA.datos.fotoSync(p);
+        var msg = p.agotado ? 'Hola, quiero saber cuándo vuelve a estar disponible: ' + p.nombre + ' (' + p.grupo + ').'
+          : 'Hola, quiero cotizar: ' + p.nombre + ' (' + p.grupo + ')' + (p.precio !== null ? ', precio publicado ' + MYA.datos.precio(p.precio) : '') + '.';
+        return '<article class="prod' + (p.agotado ? ' es-agotado' : '') + '"><div class="img">' +
+          (p.agotado ? '<span class="agotado">Agotado</span>' : '') +
+          '<img src="' + esc(src || SIN_FOTO) + '"' + (src ? '' : ' data-n="' + it.n + '"') + ' alt="' + esc(p.nombre) + '" loading="lazy"></div>' +
+          '<div class="datos"><h3>' + esc(p.nombre) + '</h3><p class="disp">' + esc(p.grupo) + '</p>' +
+          (p.precio !== null ? '<p class="precio">' + MYA.datos.precio(p.precio) + '</p>' : '<p class="precio sin">Precio por cotización</p>') +
+          linkWa(msg, 'btn btn-wa', ICONO_WA + (p.agotado ? 'Consultar' : 'WhatsApp')) + '</div></article>';
       }).join('');
+      $$('img[data-n]', grid).forEach(function (img) {
+        MYA.datos.foto(productos[Number(img.getAttribute('data-n'))]).then(function (src) { if (src) img.src = src; });
+      });
       $('#sin-resultados').hidden = items.length > 0;
 
       var conRefs = (est.linea || t) ? bloques : [];
@@ -250,6 +272,10 @@
       });
       $$('.vista button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === est.vista)); });
     };
+    function info_pos(g) {
+      for (var k in info) if (info[k].g === g) return info[k].pos;
+      return 0;
+    }
 
     lista.addEventListener('click', function (e) {
       if (e.target.tagName !== 'A') return;
@@ -277,5 +303,6 @@
 
     leerHash();
     pintar();
+    MYA.datos.cargar().then(function (lista) { productos = lista; pintar(); });
   }
 })();

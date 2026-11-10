@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel de administración | M&amp;A Eléctricos e Ingeniería</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="adm">
+
+<header class="adm-cab">
+  <div class="cont">
+    <a href="index.html"><img src="img/logo-blanco.png" alt="M&amp;A Eléctricos e Ingeniería" width="285" height="76"></a>
+    <strong>Panel de administración</strong>
+    <nav>
+      <a href="productos.html" target="_blank" rel="noopener">Ver catálogo</a>
+      <button type="button" id="salir" hidden>Cerrar sesión</button>
+    </nav>
+  </div>
+</header>
+
+<main class="cont">
+  <p class="adm-aviso" id="aviso-demo" hidden><b>Modo demostración.</b> Firebase aún no está configurado: los cambios se guardan solo en este navegador y no se publican en el sitio.</p>
+  <p class="adm-cargando" id="cargando">Cargando…</p>
+
+  <form class="adm-login tarjeta" id="login" hidden>
+    <h1>Iniciar sesión</h1>
+    <div class="campo"><label for="l-correo">Correo</label><input id="l-correo" type="email" autocomplete="username" required></div>
+    <div class="campo"><label for="l-clave">Contraseña</label><input id="l-clave" type="password" autocomplete="current-password" required></div>
+    <p class="adm-error" id="login-error" role="alert" hidden></p>
+    <button class="btn btn-cian" type="submit">Entrar</button>
+  </form>
+
+  <section id="panel" hidden>
+    <div class="adm-barra">
+      <input id="a-buscar" type="search" placeholder="Buscar producto…" aria-label="Buscar producto">
+      <select id="a-linea" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option></select>
+      <select id="a-estado" aria-label="Filtrar por estado">
+        <option value="">Todos los estados</option>
+        <option value="sinprecio">Sin precio</option>
+        <option value="agotado">Agotados</option>
+        <option value="oculto">Ocultos</option>
+      </select>
+      <button class="btn btn-cian" type="button" id="nuevo">+ Nuevo producto</button>
+    </div>
+    <p class="adm-estado"><span id="a-cuenta"></span><span id="guardado" role="status"></span></p>
+
+    <div class="adm-tabla">
+      <div class="adm-fila adm-encabezado" aria-hidden="true">
+        <span>Foto</span><span>Producto</span><span>Precio (COP)</span><span>Agotado</span><span>Oculto</span><span>Acciones</span>
+      </div>
+      <div id="filas"></div>
+    </div>
+    <p class="sin-resultados" id="a-vacio" hidden>No hay productos con ese filtro.</p>
+  </section>
+</main>
+
+<dialog id="editor" class="adm-editor">
+  <form id="form-prod" method="dialog">
+    <h2 id="ed-titulo">Nuevo producto</h2>
+    <div class="campo"><label for="e-nombre">Nombre del producto</label><input id="e-nombre" required maxlength="120"></div>
+    <div class="adm-dos">
+      <div class="campo"><label for="e-linea">Categoría</label><select id="e-linea" required></select></div>
+      <div class="campo"><label for="e-grupo">Subcategoría</label><select id="e-grupo" required></select></div>
+    </div>
+    <div class="campo"><label for="e-precio">Precio en pesos (vacío = «Precio por cotización»)</label><input id="e-precio" type="number" min="0" step="1" inputmode="numeric" placeholder="Ej.: 10250"></div>
+    <div class="campo">
+      <label for="e-foto">Foto</label>
+      <div class="adm-foto"><img id="e-vista" alt="" hidden><div><input id="e-foto" type="file" accept="image/*"><small>Se ajusta automáticamente a 600 px.</small></div></div>
+    </div>
+    <label class="adm-check"><input id="e-agotado" type="checkbox"> Marcar como agotado</label>
+    <label class="adm-check"><input id="e-oculto" type="checkbox"> Ocultar del catálogo</label>
+    <p class="adm-error" id="ed-error" role="alert" hidden></p>
+    <div class="adm-acciones">
+      <button class="btn adm-btn-sec" type="button" id="ed-cancelar">Cancelar</button>
+      <button class="btn btn-cian" type="submit" id="ed-guardar">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="js/catalogo.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/datos.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

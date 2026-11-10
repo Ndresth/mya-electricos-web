@@ -263,6 +263,7 @@ button { font: inherit; cursor: pointer; }
 .pie-contacto h5 { font-size: 17px; margin: 10px 0 4px; color: #fff; }
 .pie-contacto p { font-size: 16px; }
 .pie-contacto a { text-decoration: underline; }
+.pie-legal a { color: var(--navy-osc); text-decoration: underline; }
 .pie-legal { background: var(--cian); color: var(--navy-osc); text-align: center; font-size: 13.5px; font-weight: 600; padding: 14px 16px 84px; }
 
 /* ---------- Flotantes ---------- */
@@ -315,7 +316,14 @@ button { font: inherit; cursor: pointer; }
 .prod .img img { max-height: 180px; max-width: 100%; width: auto; object-fit: contain; }
 .prod .datos { display: flex; flex-direction: column; flex: 1; }
 .prod h3 { font-size: 17px; font-weight: 400; line-height: 1.25; margin-bottom: 8px; flex: 1; }
-.prod .disp { font-size: 13.5px; color: var(--texto-suave); margin-bottom: 14px; }
+.prod .disp { font-size: 13.5px; color: var(--texto-suave); margin-bottom: 6px; }
+.prod .precio { font-size: 21px; font-weight: 700; margin-bottom: 14px; }
+.prod .precio.sin { font-size: 14.5px; font-weight: 600; color: var(--azul); }
+.prod .img { position: relative; }
+.prod .agotado { position: absolute; left: 0; top: 0; z-index: 1; background: var(--rojo); color: #fff; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 3px 10px; border-radius: 3px; }
+.prod.es-agotado .img img { opacity: .45; filter: grayscale(1); }
+.prod.es-agotado .precio { color: var(--texto-suave); text-decoration: line-through; }
+.prod.es-agotado .precio.sin { text-decoration: none; }
 .prod .btn { align-self: flex-start; border-radius: 3px; padding: 11px 20px; }
 .prods.en-lista { grid-template-columns: 1fr; }
 .prods.en-lista .prod { flex-direction: row; align-items: center; gap: 22px; padding: 14px 4px; border-top: 1px solid var(--borde); }
