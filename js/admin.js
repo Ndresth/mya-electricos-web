@@ -8,7 +8,7 @@
   function norm(s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
   function linea(id) { return MYA.lineas.filter(function (l) { return l.id === id; })[0]; }
 
-  var productos = [];
+  var productos = [], correoSesion = '';
   var filas = $('#filas'), guardado = $('#guardado');
   var SIN_FOTO = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" fill="#eef0f5"/><path d="M30 84l20-24 14 16 10-12 16 20z" fill="#c9cedb"/><circle cx="82" cy="42" r="8" fill="#c9cedb"/></svg>');
 
@@ -30,7 +30,7 @@
   }
   function mensajeError(e) {
     var c = (e && (e.code || e.message)) || '';
-    if (/permission-denied/.test(c)) return 'esta cuenta no tiene permiso de edición.';
+    if (/permission-denied/.test(c)) return 'la cuenta ' + (correoSesion || 'actual') + ' no tiene permiso de edición. En las reglas de Firestore debe aparecer ese mismo correo, en minúsculas.';
     if (/invalid-credential|wrong-password|user-not-found|invalid-email/.test(c)) return 'correo o contraseña incorrectos.';
     if (/too-many-requests/.test(c)) return 'demasiados intentos; espere unos minutos.';
     if (/network|Failed to fetch|unavailable/.test(c)) return 'sin conexión a internet.';
@@ -197,6 +197,9 @@
   D.alCambiarSesion(function (usuario, error) {
     if (error) { $('#cargando').textContent = 'No se pudo conectar con Firebase: ' + mensajeError(error); return; }
     if (!usuario) { mostrar('login'); return; }
+    correoSesion = usuario.email || '';
+    $('#quien').textContent = correoSesion;
+    $('#quien').hidden = !correoSesion;
     D.cargar().then(function (lista) { productos = lista; pintar(); mostrar('panel'); });
   });
   $('#login').addEventListener('submit', function (e) {
