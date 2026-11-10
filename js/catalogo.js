@@ -5,15 +5,13 @@
  * Para agregar o cambiar productos solo hay que editar este archivo:
  *   - lineas[]            → cada línea (tarjeta en el inicio y bloque en productos.html)
  *   - lineas[].grupos[]   → subcategorías con marcas, referencias e imágenes
- *   - imgs                → nombres de archivo dentro de img/prod/ (sin extensión)
+ *   - fotos               → [archivo en img/prod/ (sin extensión), nombre del producto]
  */
 window.MYA = {
   empresa: {
     nombre: 'M&A Eléctricos e Ingeniería S.A.S.',
-    whatsapp: '573185756242',
-    whatsappVisible: '(318) 575 6242',
-    celular: '+573183920090',
-    celularVisible: '(318) 392 0090',
+    whatsapp: '573018704924',
+    whatsappVisible: '(301) 870 4924',
     correo: 'electricoseingenierias@hotmail.com'
   },
 
@@ -38,13 +36,31 @@ window.MYA = {
             'Dimmer',
             'Convertidor de GU10 a rosca E27'
           ],
-          imgs: ['016', '017', '020', '011', '019', '003', '018', '005', '012', '014', '013', '015']
+          fotos: [
+            ['016', 'Bombillo LED industrial'],
+            ['017', 'Bombillos LED ahorradores'],
+            ['020', 'Bombillo LED alta potencia'],
+            ['011', 'Bombillo LED Sylvania'],
+            ['019', 'Bombillo dicroico LED GU10'],
+            ['003', 'Bombillo dicroico LED bipin'],
+            ['018', 'Spot LED de incrustar'],
+            ['005', 'Dimmer'],
+            ['012', 'Soporte plafón en loza'],
+            ['014', 'Soporte plafón plástico'],
+            ['013', 'Soporte en loza de dos piezas'],
+            ['015', 'Soporte mogul']
+          ]
         },
         {
           nombre: 'Tubos y cinta LED',
           marcas: ['Sylvania', 'Philips', 'Lumek', 'Karluz', 'Munilux'],
           items: ['Tubo o vela LED T5 y T8', 'Lámpara de emergencia', 'Cinta LED 50/50 y 35/18 x 5 m'],
-          imgs: ['037', '036', '038', '050']
+          fotos: [
+            ['037', 'Tubo LED T8'],
+            ['036', 'Tubos LED de colores'],
+            ['038', 'Cinta LED'],
+            ['050', 'Lámpara de emergencia']
+          ]
         },
         {
           nombre: 'Ojo de buey LED',
@@ -56,7 +72,14 @@ window.MYA = {
             'Bala de 5 y 7 LED satinada luz cálida',
             'Bala de piso'
           ],
-          imgs: ['039', '051', '052', '040', '041', '042']
+          fotos: [
+            ['039', 'Ojo de buey ecualizable'],
+            ['051', 'Ojo de buey LED'],
+            ['052', 'Ojo de buey LED dirigible'],
+            ['040', 'Carcasa para ojo de buey'],
+            ['041', 'Bala de 7 LED'],
+            ['042', 'Bala de piso']
+          ]
         },
         {
           nombre: 'Reflectores',
@@ -66,7 +89,13 @@ window.MYA = {
             'Reflector multicolor de 10W, 20W, 50W y 100W',
             'Reflector antiexplosivo'
           ],
-          imgs: ['059', '060', '078', '079', '061']
+          fotos: [
+            ['059', 'Reflector LED'],
+            ['060', 'Reflector LED modular'],
+            ['078', 'Reflector LED multicolor'],
+            ['079', 'Reflector antiexplosivo'],
+            ['061', 'Reflector LED de alta potencia']
+          ]
         },
         {
           nombre: 'Luminaria de poste',
@@ -79,7 +108,17 @@ window.MYA = {
             'Cinta bandit y hebilla',
             'Collarín para poste'
           ],
-          imgs: ['071', '063', '064', '076', '077', '075', '073', '074', '072']
+          fotos: [
+            ['071', 'Luminaria de poste LED'],
+            ['063', 'Luminaria LED para alumbrado'],
+            ['064', 'Luminaria de poste modular'],
+            ['076', 'Fotocelda'],
+            ['077', 'Fotocelda con base'],
+            ['075', 'Collarín para poste'],
+            ['073', 'Cinta bandit'],
+            ['074', 'Hebilla para cinta bandit'],
+            ['072', 'Brazo para luminaria']
+          ]
         },
         {
           nombre: 'Luminaria solar',
@@ -90,7 +129,12 @@ window.MYA = {
             'Panel solar',
             'Luminaria solar para jardín'
           ],
-          imgs: ['085', '084', '082', '083']
+          fotos: [
+            ['085', 'Reflector LED solar con panel'],
+            ['084', 'Luminaria solar de poste'],
+            ['082', 'Luminaria solar integrada'],
+            ['083', 'Luminaria solar para jardín']
+          ]
         },
         {
           nombre: 'Lámparas y paneles',
@@ -103,7 +147,18 @@ window.MYA = {
             'Lámpara recargable',
             'Lámpara de exterior'
           ],
-          imgs: ['101', '099', '102', '100', '098', '096', '097', '103', '104', '105']
+          fotos: [
+            ['101', 'Panel LED redondo de incrustar'],
+            ['099', 'Panel LED redondo de sobreponer'],
+            ['102', 'Panel LED cuadrado de incrustar'],
+            ['100', 'Panel LED cuadrado de sobreponer'],
+            ['098', 'Lámpara hermética LED'],
+            ['096', 'Panel LED 60x60'],
+            ['097', 'Bala LED 120x30'],
+            ['103', 'Lámpara recargable'],
+            ['104', 'Lámpara de exterior tipo tortuga'],
+            ['105', 'Lámpara de exterior']
+          ]
         }
       ]
     },
@@ -117,49 +172,78 @@ window.MYA = {
           nombre: 'Cable de 7 filamentos',
           marcas: ['Procables', 'Centelsa', 'Nexans', 'Andes Cables', 'Argos', 'Condumex'],
           items: ['Cable desde calibre #2 hasta #14'],
-          imgs: ['161', '160']
+          fotos: [
+            ['161', 'Cable de cobre aislado'],
+            ['160', 'Cables de potencia']
+          ]
         },
         {
           nombre: 'Alambre de 1 filamento',
           marcas: ['Procables', 'Centelsa', 'Nexans'],
           items: ['Alambre desde calibre #8 hasta #14'],
-          imgs: ['198', '199']
+          fotos: [
+            ['198', 'Alambre de cobre'],
+            ['199', 'Rollo de alambre']
+          ]
         },
         {
           nombre: 'Cable encauchetado',
           marcas: ['Procables', 'Centelsa'],
           items: ['Cable encauchetado desde 2x10 hasta 4x16'],
-          imgs: ['162', '163']
+          fotos: [
+            ['162', 'Cable encauchetado'],
+            ['163', 'Cable encauchetado en carrete']
+          ]
         },
         {
           nombre: 'Cable dúplex',
           marcas: ['Procables', 'Centelsa'],
           items: ['Cable dúplex 2x10, 2x12, 2x14, 2x16, 2x18, 2x20 y 2x22'],
-          imgs: ['158', '159']
+          fotos: [
+            ['158', 'Cable dúplex'],
+            ['159', 'Rollo de cable dúplex']
+          ]
         },
         {
           nombre: 'Cobre y aluminio desnudo',
           marcas: ['Procables', 'Centelsa'],
           items: ['Cable de cobre y aluminio desnudo #2, #4, 1/0, 2/0, 3/0 y 4/0', 'Cable soldador de 1/0 hasta 4/0'],
-          imgs: ['190', '191', '182']
+          fotos: [
+            ['190', 'Cable de cobre desnudo'],
+            ['191', 'Cable de aluminio desnudo'],
+            ['182', 'Cable de aluminio']
+          ]
         },
         {
           nombre: 'Cable vehicular',
           marcas: [],
           items: ['Cable vehicular desde calibre 22 hasta calibre 8'],
-          imgs: ['173', '184']
+          fotos: [
+            ['173', 'Cable vehicular'],
+            ['184', 'Cable vehicular calibre 22']
+          ]
         },
         {
           nombre: 'Cable UTP',
           marcas: [],
           items: ['Cable UTP categoría 5 y 6', 'Bota industrial para cable UTP', 'Conector RJ45'],
-          imgs: ['174', '175', '185', '186', '187']
+          fotos: [
+            ['174', 'Cable UTP en caja'],
+            ['175', 'Cable UTP'],
+            ['185', 'Cable de red con RJ45'],
+            ['186', 'Bota para cable UTP'],
+            ['187', 'Conector RJ45']
+          ]
         },
         {
           nombre: 'Cable coaxial',
           marcas: [],
           items: ['Cable coaxial y conectores'],
-          imgs: ['172', '171', '170']
+          fotos: [
+            ['172', 'Cable coaxial'],
+            ['171', 'Conector para cable coaxial'],
+            ['170', 'Cable coaxial (estructura)']
+          ]
         }
       ]
     },
@@ -185,7 +269,22 @@ window.MYA = {
             'Tablero bifásico y trifásico, con y sin puerta, metálico y plástico',
             'Cofres con norma RETIE'
           ],
-          imgs: ['110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '127']
+          fotos: [
+            ['110', 'Tablero de circuitos'],
+            ['111', 'Tablero con puerta'],
+            ['112', 'Caja de circuitos con puerta'],
+            ['113', 'Caja Mini Pragma'],
+            ['114', 'Caja de paso plástica'],
+            ['115', 'Caja de registro plástica'],
+            ['116', 'Caja para breaker'],
+            ['117', 'Caja para medidor'],
+            ['118', 'Cajas PVC y tapas'],
+            ['119', 'Cajas Rawelt y tapas'],
+            ['120', 'Cofre metálico RETIE'],
+            ['121', 'Cofre y caja para contador'],
+            ['122', 'Rack gabinete para comunicaciones'],
+            ['127', 'Tapa doble para intemperie']
+          ]
         }
       ]
     },
@@ -199,7 +298,11 @@ window.MYA = {
           nombre: 'Breakers',
           marcas: ['Luminex', 'Siemens', 'Chint', 'Schneider Electric', 'Eaton', 'Legrand', 'Ciles'],
           items: ['Breaker atornillable, de riel y enchufable', 'Breaker THQL – THQC monopolar, bipolar y tripolar'],
-          imgs: ['132', '133', '134']
+          fotos: [
+            ['132', 'Breaker atornillable'],
+            ['133', 'Breaker de riel'],
+            ['134', 'Breaker enchufable']
+          ]
         }
       ]
     },
@@ -228,7 +331,14 @@ window.MYA = {
             'Regleta',
             'Relevo de 8 pines'
           ],
-          imgs: ['130', '137', '138', '139', '140', '141']
+          fotos: [
+            ['130', 'Contactor con relé térmico'],
+            ['137', 'Contactor'],
+            ['138', 'Relé térmico'],
+            ['139', 'Interruptor en caja moldeada'],
+            ['140', 'Pulsadores y lámparas de señalización'],
+            ['141', 'Conmutador de 3 posiciones']
+          ]
         }
       ]
     },
@@ -242,7 +352,11 @@ window.MYA = {
           nombre: 'Aisladores de baja y alta tensión',
           marcas: ['Celsa', 'Melec', 'Tyco', '3M', 'Importados'],
           items: ['Aisladores tipo pin 13.2, 23 y 34.5 kV', 'Aisladores post type', 'Aisladores de suspensión de 6” y 10”'],
-          imgs: ['144', '145', '146']
+          fotos: [
+            ['144', 'Aisladores de suspensión'],
+            ['145', 'Aisladores de baja tensión'],
+            ['146', 'Aisladores post type']
+          ]
         },
         {
           nombre: 'Transformadores de potencia',
@@ -252,7 +366,12 @@ window.MYA = {
             'Fusible de baja y alta tensión',
             'Capacete de ½” hasta 4”'
           ],
-          imgs: ['148', '149', '150', '151']
+          fotos: [
+            ['148', 'Transformadores de potencia'],
+            ['149', 'Cortacircuito con fusible'],
+            ['150', 'Fusible tipo hilo'],
+            ['151', 'Capacete']
+          ]
         }
       ]
     },
@@ -271,7 +390,13 @@ window.MYA = {
             'Conector conduit PVC, IMC galvanizado y EMT desde ½” hasta 4”',
             'Curva conduit PVC, IMC galvanizado y EMT desde ½” hasta 4”'
           ],
-          imgs: ['229', '228', '226', '236', '238']
+          fotos: [
+            ['229', 'Tubo conduit PVC'],
+            ['228', 'Tubo conduit metálico'],
+            ['226', 'Tubo conduit galvanizado'],
+            ['236', 'Curva conduit metálica'],
+            ['238', 'Curva conduit galvanizada']
+          ]
         }
       ]
     },
@@ -285,7 +410,10 @@ window.MYA = {
           nombre: 'Coraza y flexi conduit',
           marcas: ['Iluram', 'Appleton', 'Crouse-Hinds', 'Albron', 'Arlington'],
           items: ['Coraza liquid tight de ½” a 4”', 'Flexi conduit'],
-          imgs: ['311', '312']
+          fotos: [
+            ['311', 'Coraza liquid tight'],
+            ['312', 'Flexi conduit']
+          ]
         },
         {
           nombre: 'Conduletas y canaletas',
@@ -298,7 +426,22 @@ window.MYA = {
             'Canaletas con y sin adhesivo',
             'Chazos y tornillos'
           ],
-          imgs: ['313', '314', '315', '316', '317', '318', '329', '330', '319', '328', '333', '334', '335', '336']
+          fotos: [
+            ['313', 'Conector recto liquid tight'],
+            ['314', 'Conector curvo liquid tight'],
+            ['315', 'Conduleta'],
+            ['316', 'Conduleta tipo LB'],
+            ['317', 'Conduleta tipo LR'],
+            ['318', 'Conduleta tipo T'],
+            ['329', 'Canaleta'],
+            ['330', 'Canaleta con adhesivo'],
+            ['319', 'Canaleta con tapa'],
+            ['328', 'Canaleta de piso'],
+            ['333', 'Ángulo para canaleta'],
+            ['334', 'Ángulo externo para canaleta'],
+            ['335', 'Derivación en T para canaleta'],
+            ['336', 'Ángulo plano para canaleta']
+          ]
         }
       ]
     },
@@ -322,7 +465,34 @@ window.MYA = {
             'Clavijas con y sin polo',
             'Toma aérea con y sin polo'
           ],
-          imgs: ['306', '303', '298', '300', '301', '308', '291', '299', '283', '292', '293', '304', '290', '294', '296', '288', '286', '263', '265', '266', '268', '270', '271', '272', '273', '274']
+          fotos: [
+            ['306', 'Terminal con tornillo'],
+            ['303', 'Conector de cobre'],
+            ['298', 'Conector de perforación'],
+            ['300', 'Terminal tipo pin'],
+            ['301', 'Terminal faston'],
+            ['308', 'Terminal tipo U'],
+            ['291', 'Terminal tipo O anillo'],
+            ['299', 'Terminal tipo zapato en cobre'],
+            ['283', 'Terminal de compresión'],
+            ['292', 'Clavija de caucho'],
+            ['293', 'Clavija con polo'],
+            ['304', 'Toma aérea'],
+            ['290', 'Clavija y toma industrial'],
+            ['294', 'Toma doble'],
+            ['296', 'Toma doble naranja'],
+            ['288', 'Toma doble con polo'],
+            ['286', 'Toma sencilla'],
+            ['263', 'Adaptador triple'],
+            ['265', 'Toma de incrustar trifilar'],
+            ['266', 'Toma aérea de seguridad'],
+            ['268', 'Clavija de seguridad'],
+            ['270', 'Clavija con polo reforzada'],
+            ['271', 'Toma doble con polo a tierra'],
+            ['272', 'Toma con interruptor'],
+            ['273', 'Interruptor sencillo'],
+            ['274', 'Interruptor doble']
+          ]
         }
       ]
     },
@@ -336,13 +506,23 @@ window.MYA = {
           nombre: 'Cinta aislante en baja y alta tensión',
           marcas: ['Scotch', 'Cobra'],
           items: ['Cinta aislante Super 33', 'Cinta eléctrica autofundente para alto voltaje', 'Cinta aislante de colores'],
-          imgs: ['221', '222', '223', '224', '225']
+          fotos: [
+            ['221', 'Cinta aislante Super 33'],
+            ['222', 'Cinta autofundente'],
+            ['223', 'Cinta aislante de colores'],
+            ['224', 'Cinta aislante Cobra'],
+            ['225', 'Cinta aislante Temflex']
+          ]
         },
         {
           nombre: 'Soldadura PVC y exotérmica',
           marcas: ['Tubison', 'Unisolder'],
           items: ['Soldadura PVC', 'Soldadura exotérmica'],
-          imgs: ['343', '342', '344']
+          fotos: [
+            ['343', 'Soldadura PVC'],
+            ['342', 'Soldadura PVC 1/4'],
+            ['344', 'Soldadura exotérmica']
+          ]
         }
       ]
     },
@@ -362,7 +542,12 @@ window.MYA = {
             'Medidores bidireccionales',
             'Medidores activa-reactiva'
           ],
-          imgs: ['351', '339', '340', '341']
+          fotos: [
+            ['351', 'Medidor de energía monofásico'],
+            ['339', 'Medidor de energía electrónico'],
+            ['340', 'Medidor de energía con display'],
+            ['341', 'Medidor de energía trifásico']
+          ]
         }
       ]
     },
@@ -383,7 +568,11 @@ window.MYA = {
             'Extractor de aire acondicionado con y sin rejilla',
             'Motores eléctricos monofásicos y trifásicos desde ½ hasta 5 HP'
           ],
-          imgs: ['215', '216', '218']
+          fotos: [
+            ['215', 'Extractor de aire'],
+            ['216', 'Extractor con rejilla'],
+            ['218', 'Motor eléctrico']
+          ]
         }
       ]
     },
@@ -411,10 +600,44 @@ window.MYA = {
             'Grapa galvanizada de una y dos alas',
             'Riel channel y omega'
           ],
-          imgs: ['366', '367', '368', '369', '370', '372', '373', '376', '362', '364', '365', '371']
+          fotos: [
+            ['366', 'Pararrayos de cinco puntas'],
+            ['367', 'Sensor de humo'],
+            ['368', 'Sensor de movimiento'],
+            ['369', 'Cuchilla doble tiro'],
+            ['370', 'Cuchilla'],
+            ['372', 'Timbre industrial'],
+            ['373', 'Timbre'],
+            ['376', 'Timbre inalámbrico'],
+            ['362', 'Estabilizador y elevador'],
+            ['364', 'Regulador de voltaje'],
+            ['365', 'Estabilizador'],
+            ['371', 'Multitoma']
+          ]
         }
       ]
     }
+  ],
+
+  /* Carrusel de productos destacados del inicio */
+  destacados: [
+    { linea: 'transformadores', foto: '146', nombre: 'Aisladores' },
+    { linea: 'iluminacion', foto: '059', nombre: 'Reflectores LED' },
+    { linea: 'maniobra-control', foto: '137', nombre: 'Contactores' },
+    { linea: 'cables', foto: '162', nombre: 'Cable encauchetado' },
+    { linea: 'iluminacion', foto: '084', nombre: 'Luminaria solar' },
+    { linea: 'medidores', foto: '339', nombre: 'Medidores de energía' },
+    { linea: 'cajas-tableros', foto: '122', nombre: 'Rack de comunicaciones' },
+    { linea: 'accesorios', foto: '362', nombre: 'Estabilizadores' },
+    { linea: 'extractores-motores', foto: '218', nombre: 'Motores eléctricos' }
+  ],
+
+  /* Tarjetas "línea + marcas" del inicio */
+  marcasPorLinea: [
+    { linea: 'cables', titulo: 'Cables - Alambres', marcas: 'Procables · Centelsa · Nexans', fotos: ['161', '199'] },
+    { linea: 'cajas-tableros', titulo: 'Cajas - Tableros', marcas: 'Tercol · Legrand · Indelpa', fotos: ['110', '120'] },
+    { linea: 'breakers', titulo: 'Breakers', marcas: 'Siemens · Schneider · Chint', fotos: ['133', '132'] },
+    { linea: 'iluminacion', titulo: 'Iluminación LED', marcas: 'Sylvania · Philips · Mercury', fotos: ['016', '101'] }
   ],
 
   marcasLogos: [

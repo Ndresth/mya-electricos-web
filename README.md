@@ -4,9 +4,9 @@ Sitio estático (HTML + CSS + JS, sin build) construido a partir del brochure de
 
 ## Estructura
 
-- `index.html` — inicio: presentación, líneas de productos, nosotros, marcas, contacto y sedes.
-- `productos.html` — catálogo completo por línea, con buscador y botón de cotización por WhatsApp.
-- `js/catalogo.js` — **datos del catálogo** (líneas, subcategorías, marcas, referencias e imágenes). Para agregar o cambiar productos solo se edita este archivo.
+- `index.html` — inicio: carruseles, líneas de productos, marcas, nosotros, contacto y sedes.
+- `productos.html` — catálogo por línea: cada producto con foto, nombre y botón «Cotizar» por WhatsApp; admite `?q=` para buscar.
+- `js/catalogo.js` — **datos del catálogo** (líneas, subcategorías, marcas, referencias, fotos con nombre, destacados). Para agregar o cambiar productos solo se edita este archivo.
 - `js/app.js` — pinta el catálogo, menú móvil, buscador y enlaces de WhatsApp.
 - `css/styles.css` — estilos (colores de marca en las variables de `:root`).
 - `img/prod/` — fotos de producto tomadas del brochure; `img/marcas/` — logos de marcas.
@@ -22,6 +22,7 @@ En Netlify basta conectar el repositorio: `netlify.toml` ya publica la raíz sin
 
 ## Datos de contacto usados
 
-- WhatsApp: (318) 575 6242 — Celular: (318) 392 0090
-- Correo: electricoseingenierias@hotmail.com
+- WhatsApp (único número del sitio; todas las cotizaciones llegan ahí): 301 870 4924. Se cambia en `js/catalogo.js` → `empresa.whatsapp`, y en el texto visible de `index.html` y `productos.html`.
 - Principal: Cr 45 # 99C - 84, Barranquilla — Sucursal: Calle 5 # 10 - 01, barrio 10 de Marzo, Guamal (Magdalena)
+
+El sitio es solo catálogo: no muestra precios ni tiene carrito.
